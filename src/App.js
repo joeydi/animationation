@@ -16,8 +16,9 @@ function App() {
     const rotateY = (index / 8) * -360;
 
     useEffect(() => {
+        const moduloIndex = index % 8;
         document.querySelectorAll("video").forEach((video, i) => {
-            if (i === index) {
+            if (i === moduloIndex) {
                 video.play();
             } else {
                 video.pause();
@@ -28,24 +29,24 @@ function App() {
     const selectPrevious = useCallback(() => {
         if (!menuActive) {
             setMenuActive(true);
-            setIndex((oldIndex) => (oldIndex - 1) % 8);
+            setIndex((oldIndex) => oldIndex - 1);
             window.setTimeout(() => {
                 setMenuActive(false);
             }, 500);
         } else {
-            setIndex((oldIndex) => (oldIndex - 1) % 8);
+            setIndex((oldIndex) => oldIndex - 1);
         }
     }, [menuActive]);
 
     const selectNext = useCallback(() => {
         if (!menuActive) {
             setMenuActive(true);
-            setIndex((oldIndex) => (oldIndex + 1) % 8);
+            setIndex((oldIndex) => oldIndex + 1);
             window.setTimeout(() => {
                 setMenuActive(false);
             }, 500);
         } else {
-            setIndex((oldIndex) => (oldIndex + 1) % 8);
+            setIndex((oldIndex) => oldIndex + 1);
         }
     }, [menuActive]);
 
