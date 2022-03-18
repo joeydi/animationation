@@ -1,11 +1,11 @@
-import gsap from "gsap";
-import Draggable from "gsap/Draggable";
-import InertiaPlugin from "gsap/InertiaPlugin";
-import React, { useState, useEffect } from "react";
+import gsap from "@gsap/shockingly";
+import Draggable from "@gsap/shockingly/Draggable";
+import InertiaPlugin from "@gsap/shockingly/InertiaPlugin";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSpring } from "react-spring";
 import "./App.css";
 import Menu from "./Menu.js";
-import MenuToggle from "./MenuToggle.js";
+// import MenuToggle from "./MenuToggle.js";
 
 gsap.registerPlugin(Draggable);
 gsap.registerPlugin(InertiaPlugin);
@@ -13,7 +13,6 @@ gsap.registerPlugin(InertiaPlugin);
 function App() {
     const [menuActive, setMenuActive] = useState(false);
     const [index, setIndex] = useState(0);
-
     const rotateY = (index / 8) * -360;
 
     useEffect(() => {
@@ -26,41 +25,58 @@ function App() {
         });
     }, [index]);
 
-    // const playVideo = (index) => {
-    //     document.querySelectorAll("video").forEach((video, i) => {
-    //         if (i === index) {
-    //             video.play();
-    //         } else {
-    //             video.pause();
-    //         }
-    //     });
-    // };
-
-    const selectPrevious = () => {
+    const selectPrevious = useCallback(() => {
         if (!menuActive) {
             setMenuActive(true);
-            setIndex((oldIndex) => oldIndex - 1);
-            // playVideo(index);
+            setIndex((oldIndex) => (oldIndex - 1) % 8);
             window.setTimeout(() => {
                 setMenuActive(false);
             }, 500);
         } else {
-            setIndex((oldIndex) => oldIndex - 1);
+            setIndex((oldIndex) => (oldIndex - 1) % 8);
         }
-    };
+    }, [menuActive]);
 
-    const selectNext = () => {
+    const selectNext = useCallback(() => {
         if (!menuActive) {
             setMenuActive(true);
-            setIndex((oldIndex) => oldIndex + 1);
-            // playVideo(index);
+            setIndex((oldIndex) => (oldIndex + 1) % 8);
             window.setTimeout(() => {
                 setMenuActive(false);
             }, 500);
         } else {
-            setIndex((oldIndex) => oldIndex + 1);
+            setIndex((oldIndex) => (oldIndex + 1) % 8);
         }
-    };
+    }, [menuActive]);
+
+    const handleKeyPress = useCallback(
+        (event) => {
+            console.log(`Key pressed: ${event.key}`);
+
+            if (event.key === "ArrowLeft") {
+                selectPrevious();
+            }
+
+            if (event.key === "ArrowRight") {
+                selectNext();
+            }
+
+            if (event.key === "Escape") {
+                setMenuActive((menuActive) => {
+                    return !menuActive;
+                });
+            }
+        },
+        [setMenuActive, selectPrevious, selectNext]
+    );
+
+    useEffect(() => {
+        document.addEventListener("keydown", handleKeyPress);
+
+        return () => {
+            document.removeEventListener("keydown", handleKeyPress);
+        };
+    }, [handleKeyPress]);
 
     const [rotateX, setRotateX] = useState(0);
     const mouseMoveHandler = (e) => {
@@ -93,6 +109,8 @@ function App() {
 
         // console.log(handleWidth, containerWidth, maxWidth);
 
+        let index;
+
         Draggable.create(".drag-handle", {
             type: "x",
             inertia: true,
@@ -100,12 +118,12 @@ function App() {
             bounds: ".drag-container",
             edgeResistance: 0.5,
             onDrag: function () {
-                const index = gsap.utils.mapRange(0, maxWidth, 0, 7, this.x);
+                index = gsap.utils.mapRange(0, maxWidth, 0, 7, this.x);
                 // console.log(this.x, index);
                 setIndex(index);
             },
             onThrowUpdate: function () {
-                const index = gsap.utils.mapRange(0, maxWidth, 0, 7, this.x);
+                index = gsap.utils.mapRange(0, maxWidth, 0, 7, this.x);
                 // console.log(this.x, index);
                 setIndex(index);
             },
@@ -114,16 +132,21 @@ function App() {
                     return (Math.round((endValue * 7) / maxWidth) / 7) * maxWidth;
                 },
             },
+            onThrowComplete: () => {
+                // console.log(this);
+                // const index = gsap.utils.mapRange(0, maxWidth, 0, 7, this.x);
+                setIndex(Math.round(index));
+            },
         });
     }, []);
 
     return (
         <div className="App" onMouseMove={mouseMoveHandler}>
-            <MenuToggle setMenuActive={setMenuActive} />
+            {/* <MenuToggle setMenuActive={setMenuActive} />
             <div className="menu-buttons">
                 <button onClick={selectPrevious}>Previous</button>
                 <button onClick={selectNext}>Next</button>
-            </div>
+            </div> */}
             <div className="drag-container">
                 <div className="drag-handle"></div>
             </div>

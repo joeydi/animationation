@@ -1094,6 +1094,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
+"@gsap/shockingly@^3.9.1":
+  version "3.9.1"
+  resolved "https://npm.greensock.com/@gsap%2fshockingly/-/shockingly-3.9.1.tgz#cae56c490469038bb4bfb628fa25014b6b3b0877"
+  integrity sha512-F/N8MDvXCFViyIeFiensvEdv/RzO32A3sM+xdLfSWL6dEHOuzTVIo6jthZzIJTFXrvOqwkyEU/TznhpZJwUZjQ==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -4909,11 +4914,6 @@ growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
-
-gsap@^3.5.1:
-  version "3.5.1"
-  resolved "http://npm.greensock.com/@gsap%2fshockingly/-/gsap-3.5.1.tgz#29a8f793b9dad3fdf8d2482328e5c3ad3720fb76"
-  integrity sha512-bJMhlMBgxQ76vxP/1kRHfgrMt5Cwgws3KbG8HWxk/lj7uEaPo/XPiecEduml18xVhHXmy/murS44zh7888AJng==
 
 gzip-size@5.1.1:
   version "5.1.1"
