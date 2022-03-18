@@ -9,7 +9,7 @@ const Menu = ({ springProps }) => {
         <animated.div className="menu" style={springProps}>
             {videos.map((item, i) => (
                 <div className="page" key={i}>
-                    <video src={item} controls loop={i} />
+                    <video src={item} controls loop={i} muted={i} />
                 </div>
             ))}
         </animated.div>
