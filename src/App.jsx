@@ -3,7 +3,7 @@ import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
 import { useCallback, useEffect, useState } from "react";
 import { useSpring } from "react-spring";
-import "./App.css";
+import "./App.scss";
 import Menu from "./Menu.jsx";
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
