@@ -6,8 +6,7 @@ import { useSpring } from "react-spring";
 import "./App.css";
 import Menu from "./Menu.jsx";
 
-gsap.registerPlugin(Draggable);
-gsap.registerPlugin(InertiaPlugin);
+gsap.registerPlugin(Draggable, InertiaPlugin);
 
 function App() {
     const [menuActive, setMenuActive] = useState(false);
@@ -66,6 +65,12 @@ function App() {
                     return !menuActive;
                 });
             }
+
+            if (event.key === "Enter") {
+                setMenuActive((menuActive) => {
+                    return !menuActive;
+                });
+            }
         },
         [setMenuActive, selectPrevious, selectNext]
     );
@@ -86,6 +91,10 @@ function App() {
         // gsap.set(".drag-handle", {});
     };
 
+    const clickHandler = () => {
+        setMenuActive(!menuActive);
+    };
+
     const springProps = useSpring({
         transform: menuActive
             ? `translateZ(-250vw) rotateX(${rotateX}deg) rotateZ(10deg) rotateY(${rotateY}deg)`
@@ -96,20 +105,10 @@ function App() {
         },
     });
 
-    // const imgProps = useSpring({
-    //     transform: menuActive ? `rotateZ(-10deg) scale(1.25)` : `rotateZ(0deg) scale(1)`,
-    //     config: {
-    //         tension: 210,
-    //         friction: 20,
-    //     },
-    // });
-
     useEffect(() => {
         const handleWidth = document.querySelector(".drag-handle").clientWidth;
         const containerWidth = document.querySelector(".drag-container").clientWidth;
         const maxWidth = containerWidth - handleWidth;
-
-        // console.log(handleWidth, containerWidth, maxWidth);
 
         let index;
 
@@ -121,12 +120,10 @@ function App() {
             edgeResistance: 0.5,
             onDrag: function () {
                 index = gsap.utils.mapRange(0, maxWidth, 0, 7, this.x);
-                // console.log(this.x, index);
                 setIndex(index);
             },
             onThrowUpdate: function () {
                 index = gsap.utils.mapRange(0, maxWidth, 0, 7, this.x);
-                // console.log(this.x, index);
                 setIndex(index);
             },
             snap: {
@@ -135,20 +132,13 @@ function App() {
                 },
             },
             onThrowComplete: () => {
-                // console.log(this);
-                // const index = gsap.utils.mapRange(0, maxWidth, 0, 7, this.x);
                 setIndex(Math.round(index));
             },
         });
     }, []);
 
     return (
-        <div className="App" onMouseMove={mouseMoveHandler}>
-            {/* <MenuToggle setMenuActive={setMenuActive} />
-            <div className="menu-buttons">
-                <button onClick={selectPrevious}>Previous</button>
-                <button onClick={selectNext}>Next</button>
-            </div> */}
+        <div className="App" onMouseMove={mouseMoveHandler} onClick={clickHandler}>
             <div className="drag-container">
                 <div className="drag-handle"></div>
             </div>
