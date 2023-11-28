@@ -1,11 +1,10 @@
-import gsap from "@gsap/shockingly";
-import Draggable from "@gsap/shockingly/Draggable";
-import InertiaPlugin from "@gsap/shockingly/InertiaPlugin";
-import React, { useCallback, useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { Draggable } from "gsap/Draggable";
+import { InertiaPlugin } from "gsap/InertiaPlugin";
+import { useCallback, useEffect, useState } from "react";
 import { useSpring } from "react-spring";
 import "./App.css";
-import Menu from "./Menu.js";
-// import MenuToggle from "./MenuToggle.js";
+import Menu from "./Menu.jsx";
 
 gsap.registerPlugin(Draggable);
 gsap.registerPlugin(InertiaPlugin);
@@ -88,7 +87,9 @@ function App() {
     };
 
     const springProps = useSpring({
-        transform: menuActive ? `translateZ(-250vw) rotateX(${rotateX}deg) rotateZ(10deg) rotateY(${rotateY}deg)` : `translateZ(-125vw) rotateX(0deg) rotateZ(0deg) rotateY(${rotateY}deg)`,
+        transform: menuActive
+            ? `translateZ(-250vw) rotateX(${rotateX}deg) rotateZ(10deg) rotateY(${rotateY}deg)`
+            : `translateZ(-125vw) rotateX(0deg) rotateZ(0deg) rotateY(${rotateY}deg)`,
         config: {
             tension: menuActive ? 200 : 150,
             friction: 15,
