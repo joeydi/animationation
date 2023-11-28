@@ -9,7 +9,7 @@ import Menu from "./Menu.jsx";
 gsap.registerPlugin(Draggable, InertiaPlugin);
 
 function App() {
-    const [menuActive, setMenuActive] = useState(false);
+    const [menuActive, setMenuActive] = useState(true);
     const [index, setIndex] = useState(0);
     const rotateY = (index / 8) * -360;
 
